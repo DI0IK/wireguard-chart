@@ -53,7 +53,7 @@ spec:
             - name: WG_SERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: WG_SERVER_CIDR
-              value: "{{ .Values.wireguard.serverCidr }}"
+              value: "{{ .Values.wireguard.serverCidrIpv4 }}"
             - name: WG_CLIENT_IP
               value: "172.32.32.2/32"
           resources:

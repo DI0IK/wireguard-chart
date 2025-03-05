@@ -1,10 +1,11 @@
 {{- define "wg-config-template" -}}
-{{- $natSourceNetOption := .Values.wireguard.natAddSourceNet | ternary (printf "%s %s" "-s" .Values.wireguard.serverCidr) ("") -}}
+{{- $natSourceNetOptionIpv4 := .Values.wireguard.natAddSourceNetIpv4 | ternary (printf "%s %s" "-s" .Values.wireguard.serverCidrIpv4) ("") -}}
+{{- $natSourceNetOptionIpv6 := .Values.wireguard.natAddSourceNetIpv6 | ternary (printf "%s %s" "-s" .Values.wireguard.serverCidrIpv6) ("") -}}
 [Interface]
 Address = {{ .Values.wireguard.serverAddress }}
 ListenPort = 51820
-PostUp = wg set wg0 private-key /etc/wireguard/privatekey && iptables -t nat -A POSTROUTING {{ $natSourceNetOption }} -o eth0 -j MASQUERADE
-PostDown = iptables -t nat -D POSTROUTING -s {{ $natSourceNetOption }} -o eth0 -j MASQUERADE
+PostUp = wg set wg0 private-key /etc/wireguard/privatekey && iptables -t nat -A POSTROUTING {{ $natSourceNetOptionIpv4 }} -o eth0 -j MASQUERADE && ip6tables -t nat -A POSTROUTING {{ $natAddSourceNetIpv6 }} -o eth0 -j MASQUERADE
+PostDown = iptables -t nat -D POSTROUTING -s {{ $natSourceNetOptionIpv4 }} -o eth0 -j MASQUERADE && ip6tables -t nat -D POSTROUTING -s {{ $natAddSourceNetIpv6 }} -o eth0 -j MASQUERADE
 {{- range $key, $value := .Values.wireguard.interfaceOpts }}
 {{ $key }} = {{ $value }}
 {{- end }}
