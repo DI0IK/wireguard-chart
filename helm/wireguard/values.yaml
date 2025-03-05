@@ -54,13 +54,16 @@ wireguard:
   # -- Address of the VPN server
   serverAddress: 10.34.0.1/24
   # -- Subnet for your VPN, take care not to clash with cluster POD cidr
-  serverCidr: 10.34.0.0/24
+  serverCidrIpv4: 10.34.0.0/24
+  serverCidrIpv6: ""
   # -- Add the serverCidr to the nat source net option
-  natAddSourceNet: true
+  natAddSourceNetIpv4: true
+  natAddSourceNetIpv6: false
   # -- A collection of extraopts for wireguard interface
   interfaceOpts: {}
   # -- A collection of clients that will be added to wg0.conf, accepts objects with keys PublicKey and AllowedIPs (mandatory) and optional FriendlyName or FriendlyJson (https://github.com/MindFlavor/prometheus_wireguard_exporter#friendly-tags) and PersistentKeepalive (https://www.wireguard.com/quickstart/#nat-and-firewall-traversal-persistence), stored in secret
-  clients: []
+  clients:
+    []
     # - FriendlyName: username1
     #   ## FriendlyJson will override FriendlyName
     #   # FriendlyJson:
@@ -166,10 +169,12 @@ affinity:
             role: vpn
         topologyKey: kubernetes.io/hostname
 # -- Set pod nodeSelector, a simplified version of affinity
-nodeSelector: {}
+nodeSelector:
+  {}
   # example.com/vpn: ""
 # -- Set pod tolerations
-tolerations: []
+tolerations:
+  []
   # - effect: NoSchedule
   #   operator: Exists
 
@@ -270,7 +275,8 @@ metrics:
     labels:
       grafana_dashboard: "1"
     # -- Grafana dashboard annotations
-    annotations: {}
+    annotations:
+      {}
       # k8s-sidecar-target-directory: /tmp/dashboards/Other
 ## Health sidecar configuration
 healthSideCar:
