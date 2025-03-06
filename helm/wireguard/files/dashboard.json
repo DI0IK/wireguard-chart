@@ -395,7 +395,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max by(allowed_ip_0) (rate(wireguard_latest_handshake_seconds{allowed_ip_0=~\"$ips\", public_key=~\".*$keys\", friendly_name=~\".*$names\"}[$__rate_interval]) > 0)",
+          "expr": "max by(allowed_ip_0) (rate(wireguard_latest_handshake_seconds{allowed_ip_0=~\"$ips\", public_key=~\".*$keys\", friendly_name=~\".*$names\"}[$__rate_interval]))",
           "instant": false,
           "legendFormat": "{{allowed_ip_0}}: {{friendly_name}}",
           "range": true,
