@@ -26,6 +26,9 @@ PresharedKey = {{ .PresharedKey }}
 {{- if .PersistentKeepalive }}
 PersistentKeepalive = {{ .PersistentKeepalive }}
 {{- end }}
+{{- if .Endpoint }}
+Endpoint = {{ .Endpoint }}
+{{- end }}
 
 {{- end }}
 # End Clients

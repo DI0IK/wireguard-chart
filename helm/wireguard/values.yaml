@@ -72,6 +72,8 @@ wireguard:
     #   PublicKey: QTxoajwVHWZ7qqVwY2F9T1L04M0j5GSNC15++LZw1iA=
     #   # Normally PersistentKeepalive is not required
     #   #PersistentKeepalive: 25
+    #   # Optional Endpoint for peer
+    #   Endpoint: 0.0.0.0:51820
 securityContext:
   runAsNonRoot: true
   runAsUser: 1000
